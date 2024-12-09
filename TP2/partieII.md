@@ -82,7 +82,23 @@ Le firewall est actif.
 
 
 🌞 **Le script `id.sh` affiche l'URL vers une photo de chat random**
-
+```
+[abc@node1 ~]$ /opt/id.sh
+Salu a toa abc.
+Nouvelle connexion 09/12/24 16:20:28.
+Connecté avec le shell /bin/bash.
+OS : Rocky Linux 9.5 (Blue Onyx) - Kernel : 5.14.0-503.14.1.el9_5.x86_64
+Ressources :
+  - 1.5Gi RAM dispo
+  -   16G espace disque dispo
+  - 8879601 fichiers restants
+Actuellement :
+  - 343 paquets installés
+  - 2 port(s) ouvert(s)
+Python est bien installé sur la machine au chemin : /usr/bin/python3
+Le firewall est actif.
+Voilà ta photo de chat :
+```
 
 
 ## 4. Bannière
@@ -90,11 +106,34 @@ Le firewall est actif.
 
 
 🌞 **Stocker le fichier `id.sh` dans `/opt`**
+🌞 **Ajouter l'exécution au `.bashrc` de votre utilisateur**
+```
+PS C:\Users\Naly> ssh abc@10.2.1.1
+abc@10.2.1.1's password:
+Last login: Mon Dec  9 15:59:34 2024 from 10.2.1.10
+Test de récupération de la photo de chat avec curl...
+Extraction de l'URL :
+Salu a toa abc.
+Nouvelle connexion 09/12/24 16:31:52.
+Connecté avec le shell /bin/bash.
+OS : Rocky Linux 9.5 (Blue Onyx) - Kernel : 5.14.0-503.14.1.el9_5.x86_64
+Ressources :
+  - 1.5Gi RAM dispo
+  -   16G espace disque dispo
+  - 8879597 fichiers restants
+Actuellement :
+  - 343 paquets installés
+  - 2 port(s) ouvert(s)
+Python est bien installé sur la machine au chemin : /usr/bin/python3
+Le firewall est actif.
+Voilà ta photo de chat :
+```
 
 🌞 **Prouvez que tout le monde peut exécuter le script**
-
-
-🌞 **Ajouter l'exécution au `.bashrc` de votre utilisateur**
+```
+[abc@node1 ~]$ ls -l /opt/id.sh
+-rwxr-xr-x. 1 root root 1864 Dec  9 16:26 /opt/id.sh
+```
 
 
 ## 5. Bonus : des paillettes
