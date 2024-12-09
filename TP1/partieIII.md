@@ -80,23 +80,65 @@ Il tourne sur le port 19999.
 ## 3. Ajouter un check
 
 🌞 **Ajouter un check**
-
+```
+[abc@monitoring ~]$ sudo nano /etc/netdata/health.d/tcpcheck.conf
+[abc@monitoring ~]$ sudo systemctl restart netdata
+```
+```
+check:
+  name: "WEB_web.tp1.b1"
+  type: "tcp"
+  host: "10.1.1.2"
+  port: 4724
+  timeout seconds: 1
+```
 
 🌞 **Ajouter un check**
-
+```
+[abc@monitoring ~]$ sudo nano /etc/netdata/health.d/tcpcheck.conf
+[abc@monitoring ~]$ sudo systemctl restart netdata
+```
+```
+check:
+  name: "SSH_web.tp1.b1"
+  type: "tcp"
+  host: "10.1.1.2"
+  port: 3421
+  timeout seconds: 1
+```
 
 ## 4. Ajouter des alertes
 
 
 🌞 **Configurer l'alerting avec Discord**
-
-
 🌞 **Tester que ça fonctionne**
+```
+[abc@monitoring ~]$ sudo nano /etc/netdata/health_alarm_notify.conf
+[abc@monitoring ~]$ sudo systemctl restart netdata
+[abc@monitoring ~]$ sudo /usr/libexec/netdata/plugins.d/alarm-notify.sh test
 
+# SENDING TEST WARNING ALARM TO ROLE: sysadmin
+time=2024-12-04T18:19:28.458+01:00 comm=alarm-notify.sh source=health level=error tid=37550 thread=alarm-notify msg_id=6db0018e83e34320ae2a659d78019fb7 node=monitoring.tp1.b1 instance=test.chart alert_id=1 alert_unique_id=1 alert=test_alarm alert_class=Test alert_recipient=sysadmin alert_duration=1 alert_value=100 alert_value_old=90 alert_status=WARNING alert_value_old=CLEAR alert_units=units alert_summary="a test alarm" alert_info="this is a test alarm to verify notifications work" request="'/usr/libexec/netdata/plugins.d/alarm-notify.sh' 'sysadmin' 'monitoring.tp1.b1' '1' '1' '1' '1733332768' 'test_alarm' 'test.chart' 'WARNING' 'CLEAR' '100' '90' '/usr/libexec/netdata/plugins.d/alarm-notify.sh' '1' '1' 'units' 'this is a test alarm to verify notifications work' 'new value' 'old value' 'evaluated expression' 'expression variable values' '0' '0' '' '' 'Test' 'command to edit the alarm=0=monitoring.tp1.b1' '' '' 'a test alarm' " msg="[ALERT NOTIFICATION]: Cannot find sendmail command in the system path. Disabling email notifications."
+time=2024-12-04T18:19:29.639+01:00 comm=alarm-notify.sh source=health level=info tid=37569 thread=alarm-notify msg_id=6db0018e83e34320ae2a659d78019fb7 node=monitoring.tp1.b1 instance=test.chart alert_id=1 alert_unique_id=1 alert=test_alarm alert_class=Test alert_recipient=sysadmin alert_duration=1 alert_value=100 alert_value_old=90 alert_status=WARNING alert_value_old=CLEAR alert_units=units alert_summary="a test alarm" alert_info="this is a test alarm to verify notifications work" request="'/usr/libexec/netdata/plugins.d/alarm-notify.sh' 'sysadmin' 'monitoring.tp1.b1' '1' '1' '1' '1733332768' 'test_alarm' 'test.chart' 'WARNING' 'CLEAR' '100' '90' '/usr/libexec/netdata/plugins.d/alarm-notify.sh' '1' '1' 'units' 'this is a test alarm to verify notifications work' 'new value' 'old value' 'evaluated expression' 'expression variable values' '0' '0' '' '' 'Test' 'command to edit the alarm=0=monitoring.tp1.b1' '' '' 'a test alarm' " msg="[ALERT NOTIFICATION]: sent discord notification to 'everyone' for notification to 'sysadmin' for transition from CLEAR to WARNING, of alert 'test_alarm' = 'new value', of instance 'test.chart', context '' on host 'monitoring.tp1.b1'"
+# OK
+
+# SENDING TEST CRITICAL ALARM TO ROLE: sysadmin
+time=2024-12-04T18:19:29.916+01:00 comm=alarm-notify.sh source=health level=error tid=37582 thread=alarm-notify msg_id=6db0018e83e34320ae2a659d78019fb7 node=monitoring.tp1.b1 instance=test.chart alert_id=1 alert_unique_id=1 alert=test_alarm alert_class=Test alert_recipient=sysadmin alert_duration=1 alert_value=100 alert_value_old=90 alert_status=CRITICAL alert_value_old=WARNING alert_units=units alert_summary="a test alarm" alert_info="this is a test alarm to verify notifications work" request="'/usr/libexec/netdata/plugins.d/alarm-notify.sh' 'sysadmin' 'monitoring.tp1.b1' '1' '1' '2' '1733332769' 'test_alarm' 'test.chart' 'CRITICAL' 'WARNING' '100' '90' '/usr/libexec/netdata/plugins.d/alarm-notify.sh' '1' '2' 'units' 'this is a test alarm to verify notifications work' 'new value' 'old value' 'evaluated expression' 'expression variable values' '0' '0' '' '' 'Test' 'command to edit the alarm=0=monitoring.tp1.b1' '' '' 'a test alarm' " msg="[ALERT NOTIFICATION]: Cannot find sendmail command in the system path. Disabling email notifications."
+time=2024-12-04T18:19:31.109+01:00 comm=alarm-notify.sh source=health level=info tid=37604 thread=alarm-notify msg_id=6db0018e83e34320ae2a659d78019fb7 node=monitoring.tp1.b1 instance=test.chart alert_id=1 alert_unique_id=1 alert=test_alarm alert_class=Test alert_recipient=sysadmin alert_duration=1 alert_value=100 alert_value_old=90 alert_status=CRITICAL alert_value_old=WARNING alert_units=units alert_summary="a test alarm" alert_info="this is a test alarm to verify notifications work" request="'/usr/libexec/netdata/plugins.d/alarm-notify.sh' 'sysadmin' 'monitoring.tp1.b1' '1' '1' '2' '1733332769' 'test_alarm' 'test.chart' 'CRITICAL' 'WARNING' '100' '90' '/usr/libexec/netdata/plugins.d/alarm-notify.sh' '1' '2' 'units' 'this is a test alarm to verify notifications work' 'new value' 'old value' 'evaluated expression' 'expression variable values' '0' '0' '' '' 'Test' 'command to edit the alarm=0=monitoring.tp1.b1' '' '' 'a test alarm' " msg="[ALERT NOTIFICATION]: sent discord notification to 'everyone' for notification to 'sysadmin' for transition from WARNING to CRITICAL, of alert 'test_alarm' = 'new value', of instance 'test.chart', context '' on host 'monitoring.tp1.b1'"
+# OK
+
+# SENDING TEST CLEAR ALARM TO ROLE: sysadmin
+time=2024-12-04T18:19:31.290+01:00 comm=alarm-notify.sh source=health level=error tid=37618 thread=alarm-notify msg_id=6db0018e83e34320ae2a659d78019fb7 node=monitoring.tp1.b1 instance=test.chart alert_id=1 alert_unique_id=1 alert=test_alarm alert_class=Test alert_recipient=sysadmin alert_duration=1 alert_value=100 alert_value_old=90 alert_status=CLEAR alert_value_old=CRITICAL alert_units=units alert_summary="a test alarm" alert_info="this is a test alarm to verify notifications work" request="'/usr/libexec/netdata/plugins.d/alarm-notify.sh' 'sysadmin' 'monitoring.tp1.b1' '1' '1' '3' '1733332771' 'test_alarm' 'test.chart' 'CLEAR' 'CRITICAL' '100' '90' '/usr/libexec/netdata/plugins.d/alarm-notify.sh' '1' '3' 'units' 'this is a test alarm to verify notifications work' 'new value' 'old value' 'evaluated expression' 'expression variable values' '0' '0' '' '' 'Test' 'command to edit the alarm=0=monitoring.tp1.b1' '' '' 'a test alarm' " msg="[ALERT NOTIFICATION]: Cannot find sendmail command in the system path. Disabling email notifications."
+time=2024-12-04T18:19:32.386+01:00 comm=alarm-notify.sh source=health level=info tid=37638 thread=alarm-notify msg_id=6db0018e83e34320ae2a659d78019fb7 node=monitoring.tp1.b1 instance=test.chart alert_id=1 alert_unique_id=1 alert=test_alarm alert_class=Test alert_recipient=sysadmin alert_duration=1 alert_value=100 alert_value_old=90 alert_status=CLEAR alert_value_old=CRITICAL alert_units=units alert_summary="a test alarm" alert_info="this is a test alarm to verify notifications work" request="'/usr/libexec/netdata/plugins.d/alarm-notify.sh' 'sysadmin' 'monitoring.tp1.b1' '1' '1' '3' '1733332771' 'test_alarm' 'test.chart' 'CLEAR' 'CRITICAL' '100' '90' '/usr/libexec/netdata/plugins.d/alarm-notify.sh' '1' '3' 'units' 'this is a test alarm to verify notifications work' 'new value' 'old value' 'evaluated expression' 'expression variable values' '0' '0' '' '' 'Test' 'command to edit the alarm=0=monitoring.tp1.b1' '' '' 'a test alarm' " msg="[ALERT NOTIFICATION]: sent discord notification to 'everyone' for notification to 'sysadmin' for transition from CRITICAL to CLEAR, of alert 'test_alarm' = 'new value', of instance 'test.chart', context '' on host 'monitoring.tp1.b1'"
+# OK
+```
 
 🌞 **Euh... tester que ça fonctionne pour de vrai**
-
-
+```
+[abc@monitoring ~]$ yes > /dev/null &
+[1] 38015
+```
+Augmentation des métriques sur l'interface Web Netdata.
 
 🌞 **Configurer une alerte quand le port du serveur Web ne répond plus**
 
