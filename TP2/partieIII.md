@@ -97,7 +97,44 @@ Par exemple :
 
 🌞 **Vous fournirez dans le compte-rendu :**
 
+```
+#!/bin/bash
 
+# Vérifier si le dossier /var/log/yt existe
+if [ ! -d "/var/log/yt" ]; then
+    echo "Le dossier /var/log/yt n'existe pas. Veuillez le créer et réessayer."
+    exit 1
+fi
+
+# Vérifier si le dossier /opt/yt/downloads existe
+if [ ! -d "/opt/yt/downloads" ]; then
+    echo "Le dossier /opt/yt/downloads n'existe pas. Veuillez le créer et réessayer."
+    exit 1
+fi
+
+# Récupérer l'URL passée en argument
+URL=$1
+
+# Récupérer le nom de la vidéo
+VIDEO_NAME=$(yt-dlp --get-title "$URL" | sed 's/ /_/g')
+
+# Créer le dossier de téléchargement
+mkdir -p "/opt/yt/downloads/$VIDEO_NAME"
+
+# Télécharger la vidéo
+yt-dlp -o "/opt/yt/downloads/$VIDEO_NAME/$VIDEO_NAME.mp4" "$URL" > /dev/null 2>&1
+
+# Télécharger la description
+yt-dlp --get-description "$URL" > "/opt/yt/downloads/$VIDEO_NAME/description" 2>/dev/null
+
+# Enregistrer dans les logs
+DATE=$(date +"[%y/%m/%d %H:%M:%S]")
+echo "$DATE Video $URL was downloaded. File path : /opt/yt/downloads/$VIDEO_NAME/$VIDEO_NAME.mp4" >> /var/log/yt/download.log
+
+# Afficher un message de confirmation
+echo "Video $URL was downloaded."
+echo "File path : /opt/yt/downloads/$VIDEO_NAME/$VIDEO_NAME.mp4"
+```
 
 ## 2. MAKE IT A SERVICE
 
