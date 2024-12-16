@@ -84,20 +84,22 @@ Le firewall est actif.
 🌞 **Le script `id.sh` affiche l'URL vers une photo de chat random**
 ```
 [abc@node1 ~]$ /opt/id.sh
+Test de récupération de la photo de chat avec curl...
+[{"id":"7vc","url":"https://cdn2.thecatapi.com/images/7vc.gif","width":225,"height":174}]Extraction de l'URL : https://cdn2.thecatapi.com/images/a3c.jpg
 Salu a toa abc.
-Nouvelle connexion 09/12/24 16:20:28.
+Nouvelle connexion 16/12/24 15:41:00.
 Connecté avec le shell /bin/bash.
 OS : Rocky Linux 9.5 (Blue Onyx) - Kernel : 5.14.0-503.14.1.el9_5.x86_64
 Ressources :
-  - 1.5Gi RAM dispo
+  - 1.4Gi RAM dispo
   -   16G espace disque dispo
-  - 8879601 fichiers restants
+  - 8879740 fichiers restants
 Actuellement :
   - 343 paquets installés
   - 2 port(s) ouvert(s)
 Python est bien installé sur la machine au chemin : /usr/bin/python3
 Le firewall est actif.
-Voilà ta photo de chat :
+Voilà ta photo de chat : https://cdn2.thecatapi.com/images/a3c.jpg
 ```
 
 
@@ -108,25 +110,24 @@ Voilà ta photo de chat :
 🌞 **Stocker le fichier `id.sh` dans `/opt`**
 🌞 **Ajouter l'exécution au `.bashrc` de votre utilisateur**
 ```
-PS C:\Users\Naly> ssh abc@10.2.1.1
 abc@10.2.1.1's password:
-Last login: Mon Dec  9 15:59:34 2024 from 10.2.1.10
+Last login: Mon Dec 16 15:17:57 2024
 Test de récupération de la photo de chat avec curl...
-Extraction de l'URL :
+[{"id":"MTU1Nzc3MQ","url":"https://cdn2.thecatapi.com/images/MTU1Nzc3MQ.jpg","width":1200,"height":1600}]Extraction de l'URL : https://cdn2.thecatapi.com/images/an3.gif
 Salu a toa abc.
-Nouvelle connexion 09/12/24 16:31:52.
+Nouvelle connexion 16/12/24 15:18:08.
 Connecté avec le shell /bin/bash.
 OS : Rocky Linux 9.5 (Blue Onyx) - Kernel : 5.14.0-503.14.1.el9_5.x86_64
 Ressources :
   - 1.5Gi RAM dispo
   -   16G espace disque dispo
-  - 8879597 fichiers restants
+  - 8879735 fichiers restants
 Actuellement :
   - 343 paquets installés
   - 2 port(s) ouvert(s)
 Python est bien installé sur la machine au chemin : /usr/bin/python3
 Le firewall est actif.
-Voilà ta photo de chat :
+Voilà ta photo de chat : https://cdn2.thecatapi.com/images/an3.gif
 ```
 
 🌞 **Prouvez que tout le monde peut exécuter le script**
