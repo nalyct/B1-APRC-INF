@@ -209,7 +209,115 @@ Vous pourrez alors interagir avec votre service à l'aide des commandes habituel
 ### C. Rendu attendu
 
 🌞 **Toutes les commandes que vous utilisez**
+```
+#!/bin/bash
 
+# Chemins
+DOWNLOAD_DIR="/opt/yt/downloads"
+LOG_DIR="/var/log/yt"
+LOG_FILE="$LOG_DIR/download.log"
+
+# Vérifier si yt-dlp est installé
+if ! command -v yt-dlp &> /dev/null; then
+    echo "yt-dlp n'est pas installé. Veuillez l'installer avant d'exécuter ce script."
+    exit 1
+fi
+
+# Vérifier que le dossier DOWNLOAD_DIR existe
+if [ ! -d "$DOWNLOAD_DIR" ]; then
+    echo "Le dossier $DOWNLOAD_DIR n'existe pas. Assurez-vous qu'il est créé et accessible."
+    exit 1
+fi
+
+# Vérifier que le dossier LOG_DIR existe
+if [ ! -d "$LOG_DIR" ]; then
+    echo "Le dossier $LOG_DIR n'existe pas. Assurez-vous qu'il est créé et accessible."
+    exit 1
+fi
+
+# Vérifier si une URL est passée en argument
+if [ -z "$1" ]; then
+    echo "Veuillez fournir une URL YouTube."
+    exit 1
+fi
+
+URL="$1"
+
+# Récupérer le nom de la vidéo
+VIDEO_NAME=$(yt-dlp --get-title "$URL" 2>/dev/null | tr -d '/\\:*?\"<>|')
+if [ -z "$VIDEO_NAME" ]; then
+    echo "Impossible de récupérer le nom de la vidéo. Vérifiez l'URL."
+    exit 1
+fi
+
+# Créer un dossier spécifique pour la vidéo
+VIDEO_DIR="$DOWNLOAD_DIR/$VIDEO_NAME"
+mkdir -p "$VIDEO_DIR"
+
+# Télécharger la vidéo
+VIDEO_PATH="$VIDEO_DIR/$VIDEO_NAME.mp4"
+yt-dlp -o "$VIDEO_PATH" "$URL" > /dev/null 2>&1
+
+# Télécharger la description
+DESCRIPTION_PATH="$VIDEO_DIR/description"
+yt-dlp --get-description "$URL" > "$DESCRIPTION_PATH" 2>/dev/null
+
+# Sortie utilisateur
+echo "Video $URL was downloaded."
+echo "File path : $VIDEO_PATH"
+
+# Journaliser l'opération
+DATE=$(date "+%y/%m/%d %H:%M:%S")
+echo "[$DATE] Video $URL was downloaded. File path : $VIDEO_PATH" >> "$LOG_FILE"
+```
+```
+[abc@node1 ~]$ Video https://www.youtube.com/watch?v=dQw4w9WgXcQ was downloaded.
+[abc@node1 ~]$ File path : /opt/yt/downloads/Never Gonna Give You Up/Never Gonna Give You Up.mp4
+```
+```
+[abc@node1 ~]$ cat /var/log/yt/download.log
+#!/bin/bash
+
+# Vérifier si le dossier /var/log/yt existe
+if [ ! -d "/var/log/yt" ]; then
+    echo "Le dossier /var/log/yt n'existe pas. Veuillez le créer et réessayer."
+    exit 1
+fi
+
+# Vérifier si le dossier /opt/yt/downloads existe
+if [ ! -d "/opt/yt/downloads" ]; then
+    echo "Le dossier /opt/yt/downloads n'existe pas. Veuillez le créer et réessayer."
+    exit 1
+fi
+
+# Récupérer l'URL passée en argument
+URL=$1
+echo "URL: $URL"  # Ajoutez cette ligne pour afficher l'URL
+
+# Récupérer le nom de la vidéo
+VIDEO_NAME=$(yt-dlp --get-title "$URL" | sed 's/ /_/g')
+echo "Nom de la vidéo: $VIDEO_NAME"  # Ajoutez cette ligne pour afficher le nom de la vidéo
+
+# Créer le dossier de téléchargement
+mkdir -p "/opt/yt/downloads/$VIDEO_NAME"
+
+# Télécharger la vidéo
+yt-dlp -o "/opt/yt/downloads/$VIDEO_NAME/$VIDEO_NAME.mp4" "$URL" > /dev/null 2>&1
+
+# Télécharger la description
+yt-dlp --get-description "$URL" > "/opt/yt/downloads/$VIDEO_NAME/description" 2>/dev/null
+
+# Enregistrer dans les logs
+DATE=$(date +"[%y/%m/%d %H:%M:%S]")
+echo "$DATE Video $URL was downloaded. File path : /opt/yt/downloads/$VIDEO_NAME/$VIDEO_NAME.mp4" >> /var/log/yt/download.log
+echo "Log écrit dans /var/log/yt/download.log"  # Confirmer que le log est écrit
+
+# Afficher un message de confirmation
+echo "Video $URL was downloaded."
+echo "File path : /opt/yt/downloads/$VIDEO_NAME/$VIDEO_NAME.mp4"
+
+[abc@node1 ~]$
+```
 
 🌞 **Le script `yt-next-gen.sh` dans le dépôt git**
 
