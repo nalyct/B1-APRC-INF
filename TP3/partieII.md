@@ -1,15 +1,15 @@
 ```
 [abc@music ~]$ sudo /opt/autoconfig.sh music.tp3.b1
 [sudo] password for abc:
-21:41:18 [INFO] Le script d'autoconfiguration a démarré
-21:41:18 [INFO] Le script a bien été lancé en root
-21:41:18 [INFO] SELinux est déjà en mode permissive (temporaire)
-21:41:18 [INFO] Le fichier de configuration SELinux est déjà correct
-21:41:18 [INFO] Service de firewalling firewalld est activé
-21:41:18 [INFO] Le service SSH n'utilise pas le port 22. Configuration actuelle correcte
-21:41:19 [INFO] Le nom de la machine est déjà configuré : music
-21:41:19 [INFO] L'utilisateur abc appartient déjà au groupe wheel
-21:41:19 [INFO] Le script d'autoconfiguration s'est correctement déroulé
+23:25:04 [INFO] Le script commence.
+23:25:04 [INFO] Ok, on est root.
+23:25:04 [INFO] SELinux est déjà désactivé.
+23:25:04 [INFO] Le fichier SELinux est bon.
+23:25:04 [INFO] Le firewall marche bien.
+23:25:04 [INFO] Le port SSH est déjà bon.
+23:25:05 [INFO] Le nom de la machine est déjà réglé.
+23:25:05 [INFO] abc est déjà dans wheel.
+23:25:05 [INFO] Le script est fini.
 [abc@music ~]$ sudo hostnamectl set-hostname music.tp3.b1
 [abc@music ~]$ sudo mkdir -p /srv/music
 ```
